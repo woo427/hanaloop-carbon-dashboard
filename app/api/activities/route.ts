@@ -1,7 +1,7 @@
 import { pool } from "@/lib/db";
 import { NextResponse } from "next/server";
 import { ActivityDto } from "@/types/activity";
-import { success } from "@/lib/response.ts";
+import { success, error } from "@/lib/response";
 
 export async function GET() {
   try {
@@ -11,6 +11,6 @@ export async function GET() {
 
     return NextResponse.json(success(res.rows));
   } catch {
-    return NextResponse.json(fail("activities 데이터 조회 실패"));
+    return NextResponse.json(error("activities 데이터 조회 실패"));
   }
 }

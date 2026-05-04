@@ -1,4 +1,4 @@
-export const success = (data: any) => ({
+export const success = <T>(data: T) => ({
   status: "success",
   data,
 });
