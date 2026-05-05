@@ -9,7 +9,12 @@ export async function GET() {
       select * from activities
     `);
 
-    return NextResponse.json(success(res.rows));
+    const data = res.rows.map((row) => ({
+      ...row,
+      amount: Number(row.amount),
+    }));
+
+    return NextResponse.json(success(data));
   } catch {
     return NextResponse.json(error("activities 데이터 조회 실패"));
   }
