@@ -1,3 +1,6 @@
+"use client";
+
+import { useGetPcfSummary } from "@/hooks/dashboard/useGetPcfSummary";
 import {
   Card,
   CardContent,
@@ -7,10 +10,12 @@ import {
 } from "../ui/card";
 
 export default function PcfSummary() {
+  const { data: pcfSummary } = useGetPcfSummary();
+
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>11072.724 kgCO₂e</CardTitle>
+        <CardTitle>{pcfSummary} kgCO₂e</CardTitle>
       </CardHeader>
       <CardContent />
       <CardFooter>2025년 pcf 요약</CardFooter>
