@@ -121,10 +121,17 @@ export default function CalculatorForm() {
 
                 <div>
                   <Input
+                    type="number"
                     step="any"
                     {...register("elec", { valueAsNumber: true })}
                     placeholder="데이터를 입력해 주세요."
                     className="w-48 text-sm"
+                    onInput={(e) => {
+                      e.currentTarget.value = e.currentTarget.value.replace(
+                        /[^0-9.]/g,
+                        "",
+                      );
+                    }}
                   />
                   <p className="h-1 pt-1 text-red-400 text-xs text-center">
                     {errors.elec?.message}
@@ -142,6 +149,12 @@ export default function CalculatorForm() {
                     {...register("plastic1", { valueAsNumber: true })}
                     placeholder="데이터를 입력해 주세요."
                     className="w-48 text-sm"
+                    onInput={(e) => {
+                      e.currentTarget.value = e.currentTarget.value.replace(
+                        /[^0-9.]/g,
+                        "",
+                      );
+                    }}
                   />
                   <p className="h-1 pt-1 text-red-400 text-xs text-center">
                     {errors.plastic1?.message}
@@ -159,6 +172,12 @@ export default function CalculatorForm() {
                     {...register("plastic2", { valueAsNumber: true })}
                     placeholder="데이터를 입력해 주세요."
                     className="w-48 text-sm"
+                    onInput={(e) => {
+                      e.currentTarget.value = e.currentTarget.value.replace(
+                        /[^0-9.]/g,
+                        "",
+                      );
+                    }}
                   />
                   <p className="h-1 pt-1 text-red-400 text-xs text-center">
                     {errors.plastic2?.message}
@@ -176,6 +195,12 @@ export default function CalculatorForm() {
                     {...register("trans", { valueAsNumber: true })}
                     placeholder="데이터를 입력해 주세요."
                     className="w-48 text-sm"
+                    onInput={(e) => {
+                      e.currentTarget.value = e.currentTarget.value.replace(
+                        /[^0-9.]/g,
+                        "",
+                      );
+                    }}
                   />
                   <p className="h-1 pt-1 text-red-400 text-xs text-center">
                     {errors.trans?.message}
