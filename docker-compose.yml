@@ -1,0 +1,36 @@
+services:
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+    depends_on:
+      - db
+
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/carbon
+      NEXT_PUBLIC_API_URL: http://localhost:3000/api
+
+  db:
+    image: postgres:16
+
+    restart: always
+
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: carbon
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  postgres_data:
