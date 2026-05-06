@@ -9,7 +9,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "../ui/chart";
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 
 const chartConfig = {
@@ -44,11 +44,15 @@ export default function PcfMonthly() {
               axisLine={false}
               tickFormatter={(value) => value.slice(0, 7)}
             />
+            <YAxis tickLine={false} axisLine={false} />
             <ChartTooltip content={<ChartTooltipContent />} />
             <ChartLegend content={<ChartLegendContent />} />
             <Bar dataKey="data" fill="var(--color-data)" radius={4} />
           </BarChart>
         </ChartContainer>
+        <p className="pt-3 text-center text-[10px] text-gray-400">
+          활동 데이터가 없는 월은 그래프에 표시되지 않습니다.
+        </p>
       </CardContent>
     </Card>
   );
