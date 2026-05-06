@@ -10,9 +10,33 @@ import {
 } from "../ui/card";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { CalculatorFormDto } from "@/types/calculatorForm";
 import { useGetCurrentEmissionFactors } from "@/hooks/dashboard/useGetCurrentEmissionFactor";
 import { useState } from "react";
+import z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const calculatorFormSchema = z.object({
+  elec: z.coerce
+    .number({
+      message: "전기 사용량을 입력해 주세요.",
+    })
+    .min(0, "사용량은 0 이상이어야 합니다."),
+  plastic1: z.coerce
+    .number({
+      message: "플라스틱 1 사용량을 입력해 주세요.",
+    })
+    .min(0, "사용량은 0 이상이어야 합니다."),
+  plastic2: z.coerce
+    .number({
+      message: "플라스틱 2 사용량을 입력해 주세요.",
+    })
+    .min(0, "사용량은 0 이상이어야 합니다."),
+  trans: z.coerce
+    .number({
+      message: "운송 사용량을 입력해 주세요.",
+    })
+    .min(0, "사용량은 0 이상이어야 합니다."),
+});
 
 export default function CalculatorForm() {
   const { data: currentEmissionFactor } = useGetCurrentEmissionFactors();
@@ -40,16 +64,18 @@ export default function CalculatorForm() {
     item.category.includes("운송"),
   )?.coeff;
 
-  const { register, handleSubmit } = useForm<CalculatorFormDto>({
-    defaultValues: {
-      elec: "",
-      plastic1: "",
-      plastic2: "",
-      trans: "",
-    },
+  type CalculatorFormInput = z.input<typeof calculatorFormSchema>;
+  type CalculatorFormOutput = z.output<typeof calculatorFormSchema>;
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<CalculatorFormInput, unknown, CalculatorFormOutput>({
+    resolver: zodResolver(calculatorFormSchema),
   });
 
-  const onSubmit = (data: CalculatorFormDto) => {
+  const onSubmit = (data: CalculatorFormOutput) => {
     setShowResult(true);
     const elec = Number(data.elec || 0);
     const plastic1 = Number(data.plastic1 || 0);
@@ -80,47 +106,81 @@ export default function CalculatorForm() {
             탄소발자국(PCF) 계산
           </CardTitle>
           <CardDescription className="text-xs">
-            전기, 원소재, 운송 데이터를 입력하면 PCF가 계산됩니다.
+            전기, 원소재, 운송 데이터를 입력하면 최신 배출계수를 기준으로 PCF가
+            계산됩니다.
           </CardDescription>
         </CardHeader>
         <CardContent className="grid grid-cols-1 p-5 gap-y-10 md:grid-cols-2 md:mr-10">
           <div className="w-fit">
             <form onSubmit={handleSubmit(onSubmit)}>
-              <div className="grid grid-cols-[80px_192px] items-center gap-y-8">
-                <label>전기</label>
-                <Input
-                  step="any"
-                  {...register("elec", { valueAsNumber: true })}
-                  placeholder="데이터를 입력해 주세요."
-                  className="w-48 text-sm"
-                />
+              <div className="grid grid-cols-[110px_192px] items-center gap-y-8">
+                <div className="text-center">
+                  <label>전기</label>
+                  <p className="text-xs text-gray-500"> (kgCO₂e / kWh)</p>
+                </div>
 
-                <label>플라스틱 1</label>
-                <Input
-                  type="number"
-                  step="any"
-                  {...register("plastic1", { valueAsNumber: true })}
-                  placeholder="데이터를 입력해 주세요."
-                  className="w-48 text-sm"
-                />
+                <div>
+                  <Input
+                    step="any"
+                    {...register("elec", { valueAsNumber: true })}
+                    placeholder="데이터를 입력해 주세요."
+                    className="w-48 text-sm"
+                  />
+                  <p className="h-1 pt-1 text-red-400 text-xs text-center">
+                    {errors.elec?.message}
+                  </p>
+                </div>
 
-                <label>플라스틱 2</label>
-                <Input
-                  type="number"
-                  step="any"
-                  {...register("plastic2", { valueAsNumber: true })}
-                  placeholder="데이터를 입력해 주세요."
-                  className="w-48 text-sm"
-                />
+                <div className="text-center">
+                  <label>플라스틱 1</label>
+                  <p className="text-xs text-gray-500"> (kgCO₂e / kg)</p>
+                </div>
+                <div>
+                  <Input
+                    type="number"
+                    step="any"
+                    {...register("plastic1", { valueAsNumber: true })}
+                    placeholder="데이터를 입력해 주세요."
+                    className="w-48 text-sm"
+                  />
+                  <p className="h-1 pt-1 text-red-400 text-xs text-center">
+                    {errors.plastic1?.message}
+                  </p>
+                </div>
 
-                <label>운송</label>
-                <Input
-                  type="number"
-                  step="any"
-                  {...register("trans", { valueAsNumber: true })}
-                  placeholder="데이터를 입력해 주세요."
-                  className="w-48 text-sm"
-                />
+                <div className="text-center">
+                  <label>플라스틱 2</label>
+                  <p className="text-xs text-gray-500"> (kgCO₂e / kg)</p>
+                </div>
+                <div>
+                  <Input
+                    type="number"
+                    step="any"
+                    {...register("plastic2", { valueAsNumber: true })}
+                    placeholder="데이터를 입력해 주세요."
+                    className="w-48 text-sm"
+                  />
+                  <p className="h-1 pt-1 text-red-400 text-xs text-center">
+                    {errors.plastic2?.message}
+                  </p>
+                </div>
+
+                <div className="text-center">
+                  <label>운송</label>
+                  <p className="text-xs text-gray-500"> (kgCO₂e / ton-km)</p>
+                </div>
+                <div>
+                  <Input
+                    type="number"
+                    step="any"
+                    {...register("trans", { valueAsNumber: true })}
+                    placeholder="데이터를 입력해 주세요."
+                    className="w-48 text-sm"
+                  />
+                  <p className="h-1 pt-1 text-red-400 text-xs text-center">
+                    {errors.trans?.message}
+                  </p>
+                </div>
               </div>
               <div className="flex justify-end pt-8">
                 <Button type="submit">결과 확인하기</Button>
