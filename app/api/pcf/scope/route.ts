@@ -2,6 +2,7 @@ import { pool } from "@/lib/db";
 import { error, success } from "@/lib/response";
 import { ActivityDto } from "@/types/activity";
 import { EmissionFactorDto } from "@/types/emissionFactor";
+import { PcfScopeDto } from "@/types/pcfScope";
 import { NextResponse } from "next/server";
 
 export async function GET() {
@@ -23,7 +24,7 @@ export async function GET() {
 	      order by version desc 
 	      limit 1)`);
 
-    const scope = {
+    const scope: PcfScopeDto = {
       scope1: 0,
       scope2: 0,
       scope3: 0,
