@@ -12,14 +12,14 @@ import {
 export default function AppSidebar() {
   return (
     <Sidebar>
-      <SidebarHeader>Carbon 대시보드</SidebarHeader>
+      <SidebarHeader>탄소 관리 플랫폼</SidebarHeader>
 
       <SidebarContent>
         <SidebarGroup>
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton asChild>
-                <Link href="/">대시보드</Link>
+                <Link href="/">탄소 배출 대시보드</Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
 
