@@ -121,16 +121,15 @@ export default function CalculatorForm() {
 
                 <div>
                   <Input
-                    type="number"
-                    step="any"
+                    type="text"
+                    inputMode="decimal"
                     {...register("elec", { valueAsNumber: true })}
                     placeholder="데이터를 입력해 주세요."
                     className="w-48 text-sm"
                     onInput={(e) => {
-                      e.currentTarget.value = e.currentTarget.value.replace(
-                        /[^0-9.]/g,
-                        "",
-                      );
+                      e.currentTarget.value = e.currentTarget.value
+                        .replace(/[^0-9.]/g, "")
+                        .replace(/(\..*)\./g, "$1");
                     }}
                   />
                   <p className="h-1 pt-1 text-red-400 text-xs text-center">
@@ -144,16 +143,15 @@ export default function CalculatorForm() {
                 </div>
                 <div>
                   <Input
-                    type="number"
-                    step="any"
+                    type="text"
+                    inputMode="decimal"
                     {...register("plastic1", { valueAsNumber: true })}
                     placeholder="데이터를 입력해 주세요."
                     className="w-48 text-sm"
                     onInput={(e) => {
-                      e.currentTarget.value = e.currentTarget.value.replace(
-                        /[^0-9.]/g,
-                        "",
-                      );
+                      e.currentTarget.value = e.currentTarget.value
+                        .replace(/[^0-9.]/g, "")
+                        .replace(/(\..*)\./g, "$1");
                     }}
                   />
                   <p className="h-1 pt-1 text-red-400 text-xs text-center">
@@ -167,16 +165,15 @@ export default function CalculatorForm() {
                 </div>
                 <div>
                   <Input
-                    type="number"
-                    step="any"
+                    type="text"
+                    inputMode="decimal"
                     {...register("plastic2", { valueAsNumber: true })}
                     placeholder="데이터를 입력해 주세요."
                     className="w-48 text-sm"
                     onInput={(e) => {
-                      e.currentTarget.value = e.currentTarget.value.replace(
-                        /[^0-9.]/g,
-                        "",
-                      );
+                      e.currentTarget.value = e.currentTarget.value
+                        .replace(/[^0-9.]/g, "")
+                        .replace(/(\..*)\./g, "$1");
                     }}
                   />
                   <p className="h-1 pt-1 text-red-400 text-xs text-center">
@@ -190,16 +187,15 @@ export default function CalculatorForm() {
                 </div>
                 <div>
                   <Input
-                    type="number"
-                    step="any"
+                    type="text"
+                    inputMode="decimal"
                     {...register("trans", { valueAsNumber: true })}
                     placeholder="데이터를 입력해 주세요."
                     className="w-48 text-sm"
                     onInput={(e) => {
-                      e.currentTarget.value = e.currentTarget.value.replace(
-                        /[^0-9.]/g,
-                        "",
-                      );
+                      e.currentTarget.value = e.currentTarget.value
+                        .replace(/[^0-9.]/g, "")
+                        .replace(/(\..*)\./g, "$1");
                     }}
                   />
                   <p className="h-1 pt-1 text-red-400 text-xs text-center">
